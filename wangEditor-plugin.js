@@ -39,3 +39,32 @@ window.wangEditor.viewsource = {
         });
     }
 };
+
+/**
+ * 去除粘贴样式
+ * HTML中引入purify.js：<script src="https://cdn.bootcss.com/dompurify/2.0.8/purify.js"></script>
+ */
+window.wangEditor.pasteTextHandle = {
+    // editor create 之前调用
+    init: function( oEditor) {
+        var editor = oEditor;
+        editor.customConfig.pasteTextHandle = function (content) {
+            var node=document.createElement("span");
+            node.innerHTML=DOMPurify.sanitize(content);
+            node.querySelectorAll('td,th').forEach(function(el){
+                el.innerHTML=el.innerHTML.replace(/<\/?p[^>]*>/gi,'');//去除table内的P标签
+            });
+            node.querySelectorAll('*').forEach(function(el){
+                el.removeAttribute("class");
+                el.removeAttribute("style");
+                el.removeAttribute("font");
+                el.removeAttribute("size");
+                el.removeAttribute("width");
+                el.removeAttribute("height");
+                el.removeAttribute("valign");
+                el.removeAttribute("border");
+            });
+            return node.innerHTML;
+        }
+    }
+};
