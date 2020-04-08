@@ -1,7 +1,7 @@
 # wangEditor-plugin
-## 富文本编辑器wangEditor【全屏】【源码】插件
+### 富文本编辑器wangEditor【全屏】【源码】插件
 
-### 使用方法：
+#### 使用方法：
 
 依赖jquery，须先引入jquery
 
@@ -11,7 +11,9 @@
 
 var E = window.wangEditor;  
 var editor = new E('#editor');  
-editor.create();  
+  // 去除粘贴样式  
+  E.pasteTextHandle.init(editor);    
+editor.create();   
   // 全屏  
   E.fullscreen.init('#content');  
   // 源码  
